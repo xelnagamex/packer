@@ -70,9 +70,9 @@ func Run(ui packer.Ui, config *Config) (bool, error) {
 		flattenedCmd := strings.Join(interpolatedCmds, " ")
 		cmd := &packer.RemoteCmd{Command: flattenedCmd}
 		sanitized := flattenedCmd
-		if len(config.Winrmpassword) > 0 {
+		if len(config.WinRMPassword) > 0 {
 			sanitized = strings.Replace(flattenedCmd,
-				config.Winrmpassword, "*****", -1)
+				config.WinRMPassword, "*****", -1)
 		}
 		log.Printf("[INFO] (shell-local): starting local command: %s", sanitized)
 		if err := cmd.StartWithUi(comm, ui); err != nil {
@@ -109,7 +109,7 @@ func createInlineScriptFile(config *Config) (string, error) {
 
 	// generate context so you can interpolate the command
 	config.Ctx.Data = &EnvVarsTemplate{
-		WinRMPassword: config.Winrmpassword,
+		WinRMPassword: config.WinRMPassword,
 	}
 
 	for _, command := range config.Inline {
@@ -143,7 +143,7 @@ func createInterpolatedCommands(config *Config, script string, flattenedEnvVars 
 		Vars:          flattenedEnvVars,
 		Script:        script,
 		Command:       script,
-		WinRMPassword: config.Winrmpassword,
+		WinRMPassword: config.WinRMPassword,
 	}
 
 	interpolatedCmds := make([]string, len(config.ExecuteCommand))
@@ -173,7 +173,7 @@ func createFlattenedEnvVars(config *Config) (string, error) {
 
 	// interpolate environment variables
 	config.Ctx.Data = &EnvVarsTemplate{
-		WinRMPassword: config.Winrmpassword,
+		WinRMPassword: config.WinRMPassword,
 	}
 	// Split vars into key/value components
 	for _, envVar := range config.Vars {

@@ -55,7 +55,7 @@ type Config struct {
 	Ctx interpolate.Context
 
 	// internal use only; for the provisioner.
-	Winrmpassword string
+	WinRMPassword string
 }
 
 func Decode(config *Config, raws ...interface{}) error {

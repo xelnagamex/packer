@@ -22,7 +22,7 @@ func (p *Provisioner) Prepare(raws ...interface{}) error {
 	if len(raws) == 1 {
 		for k, v := range raws[0].(map[interface{}]interface{}) {
 			if k.(string) == "WinRMPassword" {
-				p.config.Winrmpassword = v.(string)
+				p.config.WinRMPassword = v.(string)
 				// Even if WinRMPassword is not gonna be used, we've stored the
 				// key and pointed it to an empty string. That means we'll
 				// always reach this on our second-run of Prepare()
