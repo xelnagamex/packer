@@ -40,6 +40,7 @@ func (s *StepConnectSSH) Run(_ context.Context, state multistep.StateBag) multis
 	waitDone := make(chan bool, 1)
 	go func() {
 		ui.Say("Waiting for SSH to become available...")
+                time.Sleep(60 * time.Second)
 		comm, err = s.waitForSSH(state, cancel)
 		waitDone <- true
 	}()
